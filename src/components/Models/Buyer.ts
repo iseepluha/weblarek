@@ -1,4 +1,4 @@
-import { IBuyer} from "../../types";
+import { IBuyer, TErrors } from "../../types";
 
 export class Buyer {
     private data: IBuyer = {
@@ -24,8 +24,8 @@ export class Buyer {
         }
     }
 
-    validate(): Partial<Record<keyof IBuyer, string>> {
-        const errors: Partial<Record<keyof IBuyer, string>> = {};
+    validate(): TErrors {
+        const errors: TErrors = {};
         if (this.data.payment.trim() === '') {
             errors.payment = 'Не выбран вид оплаты';
         }

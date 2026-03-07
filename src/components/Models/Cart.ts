@@ -1,11 +1,9 @@
 import { IProduct } from "../../types";
 
 export class Cart {
-    private items: IProduct[];
+    private items: IProduct[] = [];
 
-    constructor() {
-        this.items = [];
-    }
+    constructor() {}
 
     getItems(): IProduct[] {
         return this.items;
