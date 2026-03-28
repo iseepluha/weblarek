@@ -1,4 +1,5 @@
 import { IBuyer, TErrors } from "../../types";
+import { IEvents } from "../base/Events";
 
 export class Buyer {
     private data: IBuyer = {
@@ -8,10 +9,11 @@ export class Buyer {
         email: ''
     }
 
-    constructor(){};
+    constructor(private events: IEvents){};
     
     setData(newData: Partial<IBuyer>): void {
         this.data = {...this.data, ...newData}
+        this.events.emit('buyer:changed')
     }
 
     getData(): IBuyer {
@@ -22,6 +24,7 @@ export class Buyer {
         for (let key in this.data) {
             this.data[key as keyof IBuyer] = ''
         }
+        this.events.emit('buyer:changed')
     }
 
     validate(): TErrors {
