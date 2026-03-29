@@ -250,6 +250,18 @@ Presenter - презентер содержит основную логику п
 
 ### Слой представления
 
+#### Класс Page
+
+Отвечает за отображение главной страницы — галереи товаров.
+
+Конструктор: `constructor(container: HTMLElement)`
+
+Поля класса:  
+`galleryElement: HTMLElement` — контейнер галереи товаров
+
+Сеттеры:  
+`set catalog(items: HTMLElement[])` — вставляет карточки товаров в галерею
+
 #### Класс Header
 
 Отвечает за отображение шапки сайта.
@@ -299,7 +311,6 @@ Presenter - презентер содержит основную логику п
 Поля класса:
 `titleElement: HTMLElement` — элемент названия товара
 `priceElement: HTMLElement` — элемент цены товара
-`_title: string` — хранит текущее название товара
 
 Сеттеры:
 `set title(value: string)` — устанавливает название товара
@@ -334,10 +345,13 @@ Presenter - презентер содержит основную логику п
 `buttonElement: HTMLButtonElement` — кнопка действия
 
 Сеттеры:
-`set inCart(value: boolean)` — меняет текст кнопки: «В корзину» или «Удалить из корзины»
+`set buttonText(value: string)` — устанавливает текст кнопки
 `set price(value: number | null)` — при null блокирует кнопку с текстом «Недоступно»
 `set category(value: string)` — устанавливает категорию
 `set image(value: string)` — устанавливает изображение
+
+Генерируемые события:  
+`card:action` — клик на кнопку действия
 
 #### Класс CardBasket
 
@@ -352,6 +366,9 @@ Presenter - презентер содержит основную логику п
 
 Сеттеры:
 `set index(value: number)` — устанавливает порядковый номер
+
+Генерируемые события:  
+`card:remove` — клик на кнопку удаления
 
 #### Класс Basket
 
@@ -383,16 +400,12 @@ Presenter - презентер содержит основную логику п
 `buttonElement: HTMLButtonElement` — кнопка сабмита
 `errorsElement: HTMLElement` — блок для вывода ошибок
 
-Методы:
-`reset`: сбрасывает инпуты в форме
-
 Сеттеры:
 `set valid(value: boolean)` — управляет активностью кнопки
 `set errors(value: string)` — выводит текст ошибки
 
 Генерируемые события:
-`form:changed` — при изменении любого поля формы,
-передаёт `{field, value}`
+`form:changed` — при изменении любого поля формы передаёт `{field, value}`
 `${eventName}:submit` — при сабмите формы
 
 #### Класс FormOrder
@@ -409,8 +422,8 @@ Presenter - презентер содержит основную логику п
 `buttonCashElement: HTMLButtonElement` — кнопка оплаты наличными
 
 Сеттеры:
-`set payment(value: TPayment)` — выделяет активную кнопку
-оплаты через модификатор `button_alt-active`
+`set payment(value: TPayment)` — выделяет активную кнопку оплаты через модификатор `button_alt-active`
+`set address(value: string)` — обновляет значение поля адреса
 
 #### Класс FormContacts
 
@@ -419,6 +432,10 @@ Presenter - презентер содержит основную логику п
 Конструктор:
 `constructor(container: HTMLElement, events: IEvents)`
 Передаёт `'contacts'` как eventName в родительский класс. Все поля обрабатываются родительским классом Form.
+
+Сеттеры:  
+`set email(value: string)` - обновляет значение поля эл. почты
+`set phone(value: string)` - обновляет значение поля телефона
 
 #### Класс Success
 
@@ -443,16 +460,18 @@ Presenter - презентер содержит основную логику п
 
 #### Список событий
 
-`catalog:changed` источник - Catalog - Каталог товаров обновлён  
-`preview:changed` источник - Catalog - Выбран товар для просмотра  
-`cart:changed` источник - Cart - Содержимое корзины изменилось
-`buyer:changed` источник - Buyer - Данные покупателя изменились  
-`card:select` источник - CardCatalog - Клик на карточку в галерее  
-`basket:open` источник - Header - Клик на иконку корзины  
-`order:open` источник - Basket - Клик на кнопку «Оформить»  
-`order:submit` источник - FormOrder - Сабмит первой формы  
-`contacts:submit` источник - FormContacts - Сабмит второй формы  
-`form:changed` источник - Form - Изменение поля в форме  
-`modal:open` источник - Modal - Модалка открыта  
-`modal:close` источник - Modal - Модалка закрыта  
-`success:close` источник - Success - Клик на кнопку закрытия успеха
+`catalog:changed` - Catalog - Каталог товаров обновлён  
+`preview:changed` - Catalog - Выбран товар для просмотра  
+`cart:changed` - Cart - Содержимое корзины изменилось
+`buyer:changed` - Buyer - Данные покупателя изменились  
+`card:select` - CardCatalog - Клик на карточку в галерее
+`card:action` - CardPreview Клик на кнопку действия в карточке
+`card:remove` - CardBasket - Клик на кнопку удаления из корзины
+`basket:open` - Header - Клик на иконку корзины  
+`order:open` - Basket - Клик на кнопку «Оформить»  
+`order:submit` - FormOrder - Сабмит первой формы  
+`contacts:submit` - FormContacts - Сабмит второй формы  
+`form:changed` - Form - Изменение поля в форме  
+`modal:open` - Modal - Модалка открыта  
+`modal:close` - Modal - Модалка закрыта  
+`success:close` - Success - Клик на кнопку закрытия успеха

@@ -1,6 +1,6 @@
-import { createElement, ensureElement } from "../../utils/utils";
-import { Component } from "../base/Component";
-import { IEvents } from "../base/Events";
+import { ensureElement } from "../../../utils/utils";
+import { Component } from "../../base/Component";
+import { IEvents } from "../../base/Events";
 
 interface IBasket {
   items: HTMLElement[];
@@ -38,15 +38,9 @@ export class Basket extends Component<IBasket> {
   }
 
   set items(items: HTMLElement[]) {
-    if (items.length) {
-      this.basketElement.replaceChildren(...items);
-      this.buttonElement.disabled = false;
-    } else {
-      const emptyBasketText = createElement<HTMLElement>("p");
-      emptyBasketText.textContent = "Корзина пуста";
-      this.basketElement.replaceChildren(emptyBasketText);
-      this.buttonElement.disabled = true;
-    }
+    this.basketElement.replaceChildren(...items);
+    this.buttonElement.disabled = !items.length;
+    
   }
 
   set total(value: number) {
